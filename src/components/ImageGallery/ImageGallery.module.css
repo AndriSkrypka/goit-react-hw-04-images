@@ -1,0 +1,17 @@
+ul {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 10px 200px 10px 200px;
+}
+
+.loader {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

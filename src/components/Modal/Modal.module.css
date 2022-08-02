@@ -1,0 +1,30 @@
+.backdrop {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1200;
+}
+
+.modal {
+    max-width: calc(100vw - 100px);
+    max-height: calc(100vh - 100px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+
+}
+
+.modalImg {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+
+}
