@@ -1,39 +1,48 @@
+import { useEffect } from 'react';
+
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+
 import css from './Modal.module.css';
 
-class Modal extends Component {
-  static propTypes = {
-    image: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired,
-  };
-  componentDidMount() {
-    window.addEventListener('keydown', this.onTap);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onTap);
-  }
 
-  onTap = elem => {
-    if (elem.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-  handkerBackDrop = elem => {
+
+const Modal = ({ image, onClose }) => {
+  useEffect(() => {
+    const onTap = elem => {
+      if (elem.code === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', onTap);
+  
+ return () => {
+      window.removeEventListener('keydown', onTap);
+    };
+  }, [onClose]);
+
+  
+  
+  const handkerBackDrop = elem => {
     if (elem.target === elem.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
     return (
-      <div className={css.backdrop} onClick={this.handkerBackDrop}>
+      <div className={css.backdrop} onClick={handkerBackDrop}>
         <div className={css.modal}>
-          <img className={css.modalImg} src={this.props.image} alt="" />
+          <img className={css.modalImg} src={image} alt="" />
         </div>
       </div>
     );
   }
-}
+
+  Modal.propTypes = {
+  image: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export { Modal };
+
+

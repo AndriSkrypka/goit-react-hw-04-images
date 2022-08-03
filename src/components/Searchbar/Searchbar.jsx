@@ -1,22 +1,19 @@
-import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
+
 import { toast } from 'react-toastify';
+
+import PropTypes from 'prop-types';
+
 import css from './Searchbar.module.css';
-class Searchbar extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
-  state = {
-    query: '',
-  };
 
-  handlerInput = elem => {
-    const { name, value } = elem.target;
-    this.setState({ [name]: value });
-  };
 
-  handlerSubmit = elem => {
-    const { query } = this.state;
+
+const Searchbar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const handlerInput = elem => setQuery(elem.target.value);
+
+  const handlerSubmit = elem => {
     elem.preventDefault();
 
     if (!query.trim()) {
@@ -31,33 +28,36 @@ class Searchbar extends Component {
       });
       return;
     }
-    this.props.onSubmit(query);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
   };
 
-  render() {
-    const { query } = this.state;
-    return (
-      <header className={css.header}>
-        <form onSubmit={this.handlerSubmit}>
-          <button className={css.button} type="submit">
-            Search
-          </button>
+  return (
+    <header className={css.header}>
+      <form onSubmit={handlerSubmit}>
+        <button className={css.button} type="submit">
+          Search
+        </button>
 
-          <input
-            className={css.input}
-            type="text"
-            name="query"
-            value={query}
-            autoComplete="off"
-            onChange={this.handlerInput}
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    );
-  }
-}
+        <input
+          className={css.input}
+          type="text"
+          name="query"
+          value={query}
+          autoComplete="off"
+          onChange={handlerInput}
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </form>
+    </header>
+  );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export { Searchbar };
+
+
